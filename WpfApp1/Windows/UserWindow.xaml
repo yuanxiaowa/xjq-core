@@ -1,0 +1,28 @@
+﻿<Controls:MetroWindow x:Class="WpfApp1.Windows.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Windows"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="编辑账号" Height="450" Width="800">
+    <Grid>
+        <Label Content="用户名" HorizontalAlignment="Left" Margin="95,66,0,0" VerticalAlignment="Top" Height="24" Width="34"/>
+        <TextBox x:Name="ctrl_name" HorizontalAlignment="Left" Height="23" Margin="219,66,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="320"/>
+        <ComboBox Name="ctrl_area" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="221,178,0,0" VerticalAlignment="Top" Width="320" IsTextSearchCaseSensitive="True" IsEditable="True" IsSynchronizedWithCurrentItem="True"/>
+        <Label Content="密码" HorizontalAlignment="Left" Margin="95,119,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.624,1.819" Height="24" Width="34"/>
+        <Label Content="大区" HorizontalAlignment="Left" Margin="97,176,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.624,1.819" Height="24" Width="34"/>
+        <Button Content="保存" HorizontalAlignment="Left" Margin="176,374,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <CheckBox x:Name="ctrl_continue" Content="添加后继续添加" HorizontalAlignment="Left" Margin="326,374,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="ctrl_password" HorizontalAlignment="Left" Margin="219,123,0,0" VerticalAlignment="Top" Width="320"/>
+        <TextBox x:Name="ctrl_nickname" HorizontalAlignment="Left" Height="23" Margin="221,234,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="320"/>
+        <RadioButton x:Name="ctrl_Is360" Content="360" Checked="Ctrl_Area_Checked" GroupName="area-type" IsChecked="True" HorizontalAlignment="Left" Margin="546,182,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="ctrl_Is9wan" Content="91wan" Checked="Ctrl_Area_Checked" GroupName="area-type" IsChecked="False" HorizontalAlignment="Left" Margin="684,182,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="ctrl_Is4399" Content="4399" Checked="Ctrl_Area_Checked" GroupName="area-type" IsChecked="False" HorizontalAlignment="Left" Margin="620,182,0,0" VerticalAlignment="Top"/>
+        <Label Content="昵称" HorizontalAlignment="Left" Margin="97,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.624,1.819"/>
+        <Label Content="角色序号" HorizontalAlignment="Left" Margin="97,302,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.624,1.819"/>
+        <ComboBox Name="ctrl_role" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="221,302,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
+
+    </Grid>
+</Controls:MetroWindow>

@@ -1,0 +1,91 @@
+﻿<Controls:MetroWindow x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="仙剑情" Height="450" Width="900">
+    <Grid>
+        <!--
+        <DockPanel Grid.Column="1" Margin="85,23,181,29">
+            <Grid x:Name="xx" HorizontalAlignment="Left" Height="157" VerticalAlignment="Top" Width="183"/>
+
+        </DockPanel>-->
+        <TabControl Margin="5,5,0,0">
+            <TabItem Header="账号信息">
+                <Grid Background="#FFE5E5E5" Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="113*"/>
+                        <ColumnDefinition Width="52*"/>
+                        <ColumnDefinition Width="612*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Content="自动打架" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,360,0" Click="Button_Click_5" Height="27"/>
+                    <DataGrid x:Name="dg" ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Margin="0" Grid.ColumnSpan="3">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu Name="ctrl_menu" DisplayMemberPath="Name" MenuItem.Click="ctrl_menu_Click">
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding Checked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="选中"/>
+                            <DataGridTextColumn Width="*" Binding="{Binding Nickname,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="昵称"/>
+                            <DataGridTextColumn Width="*" Binding="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="名称"/>
+                            <DataGridTextColumn Width="200" Binding="{Binding AreaName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="大区"/>
+                            <DataGridTextColumn Width="100" Binding="{Binding State,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="状态"/>
+                            <DataGridTextColumn Width="50" Binding="{Binding WinState,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="窗口"/>
+                            <!--<DataGridComboBoxColumn x:Name="cmb" Width="200" Header="大区" DisplayMemberPath="Name" SelectedValuePath="Value" SelectedItemBinding="{Binding Path}">-->
+                            <!--<DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=areas}" />
+                                        <Setter Property="SelectedValue" Value="{Binding Path=Value}" />
+                                        <Setter Property="DisplayMemberPath" Value="{Binding Path=Name}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>-->
+                            <!--<DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=areas,ElementName=this}" />
+                                        <Setter Property="SelectedValue" Value="{Binding Path=Value}" />
+                                        <Setter Property="DisplayMemberPath" Value="{Binding Path=Name}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>-->
+                            <!--</DataGridComboBoxColumn>-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBox x:Name="ctrl_msg" Grid.Column="2" HorizontalAlignment="Left" Height="27" Margin="423,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="发送" Grid.Column="2" HorizontalAlignment="Left" Margin="559,8,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+                    <TextBox x:Name="ctrl_xunlu" Grid.Column="2" HorizontalAlignment="Left" Height="27" Margin="45,8,0,0" Text="10,10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="开始附魂" Margin="28,8,660,0" VerticalAlignment="Top" Click="Button_Click_3" IsCancel="True" Grid.ColumnSpan="2" Grid.Column="1" Height="27"/>
+                    <Button Content="寻路" Grid.Row="0" Click="Button_Click_2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,441,0" Height="27"/>
+                    <Button Content="截图" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Margin="641,9,0,0" Click="Button_Click_4" Grid.Column="2"/>
+                    <Button Content="跨服boss" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,279,0" Click="Button_Click" Height="27"/>
+                    <Button Content="全选/取消" HorizontalAlignment="Left" Margin="3,8,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
+
+                    <!--<CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top"/>-->
+                </Grid>
+            </TabItem>
+            <TabItem Header="配置">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="702*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<CheckBox Content="自动附魂" HorizontalAlignment="Left" Margin="6,118,0,0" VerticalAlignment="Top" Grid.Column="1"/>-->
+                    <RadioButton x:Name="rb_revive_1" GroupName="revive" IsChecked="True" Content="原地复活" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <RadioButton x:Name="rb_revive_2" GroupName="revive" Content="复活点复活" HorizontalAlignment="Left" Margin="108,33,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="复活方式" HorizontalAlignment="Left" Margin="28,31,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="chk_auto_trans" IsChecked="True" Content="寻路自动传送" HorizontalAlignment="Left" Margin="25,76,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <CheckBox x:Name="chk_auto_select_role" IsChecked="True" Content="自动选择角色" Grid.Column="1" HorizontalAlignment="Left" Margin="25,118,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chk_locate_interval" IsChecked="False" Content="循环寻路" Grid.Column="1" HorizontalAlignment="Left" Margin="25,158,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="tb_locate_interval" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="109,153,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="25"/>
+                    <Label Content="s" Grid.Column="1" HorizontalAlignment="Left" Margin="133,152,0,0" VerticalAlignment="Top"/>
+                    <!--<CheckBox Content="跨服PK" HorizontalAlignment="Left" Margin="117,118,0,0" VerticalAlignment="Top" Grid.Column="1"/>-->
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Controls:MetroWindow>
