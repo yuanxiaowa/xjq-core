@@ -1,24 +1,12 @@
-﻿using OdyLibrary;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using mshtml;
-using System.IO;
-using System.Security.Permissions;
-using System.Threading;
-using System.Collections;
+﻿using CefSharp;
+using CefSharp.WinForms;
 using GameWindow.entities;
 using Newtonsoft.Json;
-using CefSharp;
-using CefSharp.WinForms;
+using OdyLibrary;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace GameWindow
 {
@@ -27,9 +15,7 @@ namespace GameWindow
         List<CefGameHandler> handlers = new List<CefGameHandler>();
         public GameWindow()
         {
-            InitializeComponent();
-            MinimizeBox = false;
-            CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
+            //CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
             var settings = new CefSettings()
             {
                 AcceptLanguageList = "zh-CN",
@@ -40,33 +26,50 @@ namespace GameWindow
             //Enables WebRTC
             //settings.CefCommandLineArgs.Add("enable-media-stream", "1");
             settings.CefCommandLineArgs["enable-system-flash"] = "1";
-            settings.CefCommandLineArgs["enable-npapi"] = "1";
-            settings.CefCommandLineArgs["plugin-policy"] = "allow";
-
+            //settings.CefCommandLineArgs.Add("enable-npapi", "1");
+            //settings.CefCommandLineArgs.Add("plugin-policy", "allow");
+            settings.CefCommandLineArgs.Add("ppapi-flash-path", AppDomain.CurrentDomain.BaseDirectory + "pepflashplayer32_32_0_0_330.dll");
             //Perform dependency check to make sure all relevant resources are in our output directory.
             Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
 
+            InitializeComponent();
+            MinimizeBox = false;
+            AddPage(null);
+
         }
+        ChromiumWebBrowser wb;
         void AddPage(UserInfoBase user)
         {
-            var tabpage = new TabPage(user.Nickname + "-" + user.Name);
+            var tabpage = new TabPage("-");
             var wb = new ChromiumWebBrowser();
+            this.wb = wb;
             wb.Dock = DockStyle.Fill;
             tabpage.Controls.Add(wb);
-
+            wb.Load("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
             ////wb.Url = new Uri("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
             //wb.Url = new Uri(user.AreaValue);
             //wb.ScriptErrorsSuppressed = true;
             tab.TabPages.Add(tabpage);
+            var button = new Button();
+            button.Text = "单击";
+            tabpage.Controls.Add(button);
+            button.Dock = DockStyle.Top;
+            button.Click += Button_Click;
             //var externaljs = new ExternalJS();
             ////externaljs.OnReceived += Externaljs_OnReceived;
             //wb.ObjectForScripting = externaljs;
             //externaljs.OnLogined += Externaljs_OnLogined;
             //tab.SelectedIndex = tab.TabPages.Count - 1;
 
-            var handler = new CefGameHandler(wb, user, serverProvider);
-            handlers.Add(handler);
+            //var handler = new CefGameHandler(wb, user, serverProvider);
+            //handlers.Add(handler);
         }
+
+        private void Button_Click(object sender, EventArgs e)
+        {
+            wb.Load("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
+        }
+
         OneServiceRemoteProvider serverProvider;
 
         public GameWindow(OneServiceRemoteProvider serverProvider, UserInfoBase user) : this()
