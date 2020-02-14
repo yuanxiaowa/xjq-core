@@ -248,4 +248,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /r /y $(ProjectDir)resources $(TargetDir)resources\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

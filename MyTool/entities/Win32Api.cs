@@ -33,5 +33,32 @@ namespace MyTool.entities
         //调用下一个钩子
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern int CallNextHookEx(int idHook, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("User32.dll", EntryPoint = "SendMessageW", CharSet = CharSet.Auto)]
+        public static extern int SendTextMessage(
+            IntPtr hWnd,
+            int Msg,
+            int wParam,
+            string lParam
+        );
+
+        [DllImport("User32.dll", EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
+        public static extern int SendMessage(
+            IntPtr hWnd,
+            int Msg,
+            int wParam,
+            int lParam
+        );
+    }
+
+    public class Mscode
+    {
+        public static int WM_LBUTTONDOWN = 0x0201;
+        public static int WM_LBUTTONUP = 0x0202;
+        public static int WM_PARENTNOTIFY = 0x0210;
+        public static int WM_SETTEXT = 0xC;
     }
 }

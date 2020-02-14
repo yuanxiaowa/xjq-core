@@ -203,8 +203,9 @@ namespace GameWindow.entities
             for (int i = 1; i < 10; i++)
             {
                 dm.KeyPress((Keys)(48 + i));
-                Thread.Sleep(30);
+                Thread.Sleep(100);
             }
+            dm.KeyPress((Keys)48);
         }
         public Point waitForImage(string src, int delay = 500, int x1 = 0, int y1 = 0, int x2 = 2000, int y2 = 2000, int dir = 0)
         {
