@@ -78,10 +78,11 @@
                     <RadioButton x:Name="rb_revive_2" GroupName="revive" Content="复活点复活" HorizontalAlignment="Left" Margin="108,33,0,0" VerticalAlignment="Top" Grid.Column="1"/>
                     <Label Content="复活方式" HorizontalAlignment="Left" Margin="28,31,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <CheckBox x:Name="chk_auto_trans" IsChecked="True" Content="寻路自动传送" HorizontalAlignment="Left" Margin="25,76,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <CheckBox x:Name="chk_auto_select_role" IsChecked="True" Content="自动选择角色" Grid.Column="1" HorizontalAlignment="Left" Margin="25,118,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chk_auto_select_role" Content="自动选择角色" Grid.Column="1" HorizontalAlignment="Left" Margin="25,118,0,0" VerticalAlignment="Top"/>
                     <CheckBox x:Name="chk_locate_interval" IsChecked="False" Content="循环寻路" Grid.Column="1" HorizontalAlignment="Left" Margin="25,158,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="tb_locate_interval" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="109,153,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="25"/>
                     <Label Content="s" Grid.Column="1" HorizontalAlignment="Left" Margin="133,152,0,0" VerticalAlignment="Top"/>
+                    <Button Content="编辑附魂敌人" Grid.Column="1" HorizontalAlignment="Left" Margin="283,132,0,0" VerticalAlignment="Top" Width="92" Click="Button_Click_7"/>
                     <!--<CheckBox Content="跨服PK" HorizontalAlignment="Left" Margin="117,118,0,0" VerticalAlignment="Top" Grid.Column="1"/>-->
                 </Grid>
             </TabItem>

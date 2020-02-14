@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp.Windows"
         mc:Ignorable="d"
-        Title="敌人提取" Height="450" Width="800">
+        Title="敌人编辑" Height="450" Width="800">
     <Grid>
         <Image x:Name="img" HorizontalAlignment="Left" Height="11" Margin="174,58,0,0" VerticalAlignment="Top" Width="100"/>
         <Button Content="添加敌人" HorizontalAlignment="Left" Margin="518,136,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>

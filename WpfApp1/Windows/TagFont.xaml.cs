@@ -33,6 +33,7 @@ namespace WpfApp.Windows
         {
             InitializeComponent();
             Init();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         List<FontEntity> fonts;

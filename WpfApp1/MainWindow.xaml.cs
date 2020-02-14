@@ -523,6 +523,11 @@ namespace WpfApp1
             RefreshTable();
         }
 
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            new TagFont().ShowDialog();
+        }
+
         //private void Button_Click_5(object sender, RoutedEventArgs e)
         //{
         //    var dm = new Dm.dmsoft();
