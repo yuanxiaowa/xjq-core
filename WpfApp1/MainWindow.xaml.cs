@@ -43,7 +43,7 @@ namespace WpfApp1
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //this.cmb.ItemsSource = tools.GetAreas();
-            this.loadConfig();
+            this.LoadConfig();
             this.ctrl_menu.ItemsSource = menus;
             InitProvider();
             this.Closing += MainWindow_Closing;
@@ -240,7 +240,7 @@ namespace WpfApp1
                     //item.Win = new SubGame(this, item);
                     //item.Win.Show();
                     item.State = "登陆中";
-                    openGame(item);
+                    OpenGame(item);
                 }
                 else
                 {
@@ -421,7 +421,7 @@ namespace WpfApp1
         {
             user.Provider.SendMsg("fuhun-tag", user.GameHwnd, string.Join(",", indexes));
         }
-        void openGame(UserInfoBase user)
+        void OpenGame(UserInfoBase user)
         {
             //if (clientProvider != null)
             //{
@@ -437,9 +437,9 @@ namespace WpfApp1
             Process.Start(
                //Process.GetCurrentProcess().MainModule.FileName,
 #if DEBUG
-               @"E:\Users\Administrator\source\repos\WpfApp1\GameWindow\bin\Debug\GameWindow.exe",
+               @"E:\Users\Administrator\source\repos\WpfApp1\GameWindow\bin\x86\Debug\GameWindow.exe",
 #else
-               @"GameWindow.exe",
+               @"x86\GameWindow.exe",
 #endif
                string.Format("{0} {1}", remote_name, user_str)
             );
@@ -452,7 +452,7 @@ namespace WpfApp1
             ExcuteAction("close");
         }
 
-        void loadConfig()
+        void LoadConfig()
         {
             var columns = config.loadUsers().Select(item => UserInfo.FromUserBase<UserInfo>(item));
             dg.ItemsSource =

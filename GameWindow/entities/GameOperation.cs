@@ -261,20 +261,20 @@ namespace GameWindow.entities
         {
             setState("寻找游戏窗口");
             //Thread.Sleep(3000);
-            var h_2 = dm.FindWindowEx(h_1, "Shell Embedding", "");
-            var h_3 = dm.FindWindowEx(h_2, "Shell DocObject View", "");
-            var h_4 = dm.FindWindowEx(h_3, "Internet Explorer_Server", "");
-            var hwnd = dm.FindWindowEx(h_4, "MacromediaFlashPlayerActiveX", "");
-            if (hwnd <= 0)
+            var h_2 = dm.FindWindowEx(h_1, "", "");
+            var h_3 = dm.FindWindowEx(h_2, "", "");
+            //var h_4 = dm.FindWindowEx(h_3, "Internet Explorer_Server", "");
+            //var hwnd = dm.FindWindowEx(h_4, "MacromediaFlashPlayerActiveX", "");
+            if (h_3 <= 0)
             {
                 MessageBox.Show("游戏未找到,请刷新试试");
                 throw new Exception("游戏未找到");
             }
 
-            this.hwnd = hwnd;
+            hwnd = h_3;
             var r = dm.BindWindowEx(hwnd, "gdi",
-                "dx.mouse.position.lock.api|dx.mouse.clip.lock.api|dx.mouse.input.lock.api|dx.mouse.state.api|dx.mouse.api|dx.mouse.cursor"
-                //"windows"
+                //"dx.mouse.position.lock.api|dx.mouse.clip.lock.api|dx.mouse.input.lock.api|dx.mouse.state.api|dx.mouse.api|dx.mouse.cursor"
+                "windows"
                 );
             setState("游戏中");
             DataEvent("enter", "");

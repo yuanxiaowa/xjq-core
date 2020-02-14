@@ -17,35 +17,54 @@ using System.Threading;
 using System.Collections;
 using GameWindow.entities;
 using Newtonsoft.Json;
+using CefSharp;
+using CefSharp.WinForms;
 
 namespace GameWindow
 {
     public partial class GameWindow : Form
     {
-        List<GameHandler> handlers = new List<GameHandler>();
+        List<CefGameHandler> handlers = new List<CefGameHandler>();
         public GameWindow()
         {
             InitializeComponent();
             MinimizeBox = false;
+            CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
+            var settings = new CefSettings()
+            {
+                AcceptLanguageList = "zh-CN",
+                //By default CefSharp will use an in-memory cache, you need to specify a Cache Folder to persist data
+                CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CefSharp\\Cache")
+            };
+            //Example of setting a command line argument
+            //Enables WebRTC
+            //settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+            settings.CefCommandLineArgs["enable-system-flash"] = "1";
+            settings.CefCommandLineArgs["enable-npapi"] = "1";
+            settings.CefCommandLineArgs["plugin-policy"] = "allow";
+
+            //Perform dependency check to make sure all relevant resources are in our output directory.
+            Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
+
         }
         void AddPage(UserInfoBase user)
         {
             var tabpage = new TabPage(user.Nickname + "-" + user.Name);
-            var wb = new WebBrowser();
+            var wb = new ChromiumWebBrowser();
             wb.Dock = DockStyle.Fill;
             tabpage.Controls.Add(wb);
-            //wb.Url = new Uri("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
-            wb.Url = new Uri(user.AreaValue);
-            wb.ScriptErrorsSuppressed = true;
+
+            ////wb.Url = new Uri("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
+            //wb.Url = new Uri(user.AreaValue);
+            //wb.ScriptErrorsSuppressed = true;
             tab.TabPages.Add(tabpage);
+            //var externaljs = new ExternalJS();
+            ////externaljs.OnReceived += Externaljs_OnReceived;
+            //wb.ObjectForScripting = externaljs;
+            //externaljs.OnLogined += Externaljs_OnLogined;
+            //tab.SelectedIndex = tab.TabPages.Count - 1;
 
-            var externaljs = new ExternalJS();
-            //externaljs.OnReceived += Externaljs_OnReceived;
-            wb.ObjectForScripting = externaljs;
-            externaljs.OnLogined += Externaljs_OnLogined;
-            tab.SelectedIndex = tab.TabPages.Count - 1;
-
-            var handler = new GameHandler(wb, user, serverProvider);
+            var handler = new CefGameHandler(wb, user, serverProvider);
             handlers.Add(handler);
         }
         OneServiceRemoteProvider serverProvider;
@@ -157,50 +176,5 @@ namespace GameWindow
             handler.Invoke();
         }
 
-        //[DllImportAttribute("gdi32.dll")]
-        //private static extern int BitBlt(
-        //  IntPtr hdcDest,     // handle to destination DC (device context)
-        //  int nXDest,         // x-coord of destination upper-left corner
-        //  int nYDest,         // y-coord of destination upper-left corner
-        //  int nWidth,         // width of destination rectangle
-        //  int nHeight,        // height of destination rectangle
-        //  IntPtr hdcSrc,      // handle to source DC
-        //  int nXSrc,          // x-coordinate of source upper-left corner
-        //  int nYSrc,          // y-coordinate of source upper-left corner
-        //  System.Int32 dwRop  // raster operation code
-        //);
-        //[DllImportAttribute("user32.dll")]
-        //private static extern int GetWindowDC(IntPtr hwnd);
-
-        private void Externaljs_OnLogined()
-        {
-            //serverProvider.SendMsg("cookie", user.GameHwnd, wb.Document.Cookie);
-        }
-
-        [DllImport("wininet.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
-        public static extern bool InternetSetOption(int hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
-        private unsafe void SuppressWininetBehavior()
-        {
-            /* SOURCE: http://msdn.microsoft.com/en-us/library/windows/desktop/aa385328%28v=vs.85%29.aspx
-            * INTERNET_OPTION_SUPPRESS_BEHAVIOR (81):
-            *      A general purpose option that is used to suppress behaviors on a process-wide basis. 
-            *      The lpBuffer parameter of the function must be a pointer to a DWORD containing the specific behavior to suppress. 
-            *      This option cannot be queried with InternetQueryOption. 
-            *      
-            * INTERNET_SUPPRESS_COOKIE_PERSIST (3):
-            *      Suppresses the persistence of cookies, even if the server has specified them as persistent.
-            *      Version:  Requires Internet Explorer 8.0 or later.
-            */
-
-
-            int option = (int)3/* INTERNET_SUPPRESS_COOKIE_PERSIST*/;
-            int* optionPtr = &option;
-
-            bool success = InternetSetOption(0, 81/*INTERNET_OPTION_SUPPRESS_BEHAVIOR*/, new IntPtr(optionPtr), sizeof(int));
-            if (!success)
-            {
-                MessageBox.Show("Something went wrong !>?");
-            }
-        }
     }
 }
