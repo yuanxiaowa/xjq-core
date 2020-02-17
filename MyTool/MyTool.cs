@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OdyLibrary;
+using System.Threading;
 
 namespace MyTool
 {
@@ -171,15 +172,24 @@ namespace MyTool
         {
             dm.KeyPress((Keys)last_key);
         }
-
+        bool isrunning = false;
         private async void button3_Click(object sender, EventArgs e)
         {
-            for (int i = 1; i < 10; i++)
+            if (isrunning)
             {
-                dm.KeyPress((Keys)(48 + i));
-                await Task.Delay(20);
+                return;
             }
-            dm.KeyPress((Keys)48);
+            isrunning = true;
+            while (true)
+            {
+                for (int i = 1; i < 10; i++)
+                {
+                    dm.KeyPress((Keys)(48 + i));
+                    await Task.Delay(20);
+                }
+                dm.KeyPress((Keys)48);
+                Thread.Sleep(1000);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -299,6 +309,11 @@ namespace MyTool
         private void button8_Click(object sender, EventArgs e)
         {
             FontTool.FilterFontImage();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            isrunning = false;
         }
     }
 }

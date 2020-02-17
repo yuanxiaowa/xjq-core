@@ -24,7 +24,7 @@ namespace WpfApp.Windows
         {
             InitializeComponent();
             txt_mccode.Text = Tools.McCode;
-            dp.SelectedDate = DateTime.Now.AddDays(1);
+            dp.SelectedDate = DateTime.Now.AddDays(7);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

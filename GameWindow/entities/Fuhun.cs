@@ -49,7 +49,14 @@ namespace GameWindow.entities
                 p = gop.waitForImage("附魂-icon|附魂-icon2", 500, 300, 0, 2000, 200);
                 gop.click(p.X, p.Y);
                 Thread.Sleep(1000);
-                p = gop.waitForImage("前往传送|立即前往");
+                if (gop.setting.AutoTrans)
+                {
+                    p = gop.waitForImage("前往传送");
+                }
+                else
+                {
+                    p = gop.waitForImage("立即前往");
+                }
                 gop.click(p.X, p.Y);
                 Thread.Sleep(1000);
                 p = gop.waitForImage("进入|进入2");
@@ -172,6 +179,7 @@ namespace GameWindow.entities
                                 return;
                             }
                             gop.fangjineng();
+                            Thread.Sleep(1000);
                         }
                         gop.setState(string.Format("目标{0}已死亡，切换到下一目标", i + 1));
                     }

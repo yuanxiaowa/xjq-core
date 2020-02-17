@@ -22,6 +22,7 @@ namespace WpfApp1
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            tools.AutoRegCom("regsvr32 /s resources/dm.dll");
             //#if DEBUG
             //            if (Tools.McCode == "3397f2273c0b91efbe6f94536108b31b")
             //            {
@@ -30,7 +31,6 @@ namespace WpfApp1
             //            }
             //#endif
             //new MainWindow().Show();
-            tools.AutoRegCom("regsvr32 /s resources/dm.dll");
 
             var path = Tools.CodeFilePath;
             var is_ok = File.Exists(path);

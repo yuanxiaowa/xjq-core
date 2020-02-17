@@ -33,6 +33,7 @@ namespace GameWindow.entities
                 }
                 gop.setState("攻击目标中");
                 gop.fangjineng();
+                Thread.Sleep(1000);
                 var p = gop.findImage(revive_img);
                 if (p.X > -1)
                 {

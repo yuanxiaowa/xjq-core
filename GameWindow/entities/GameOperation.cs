@@ -63,8 +63,11 @@ namespace GameWindow.entities
         public void locate(string dest, bool auto_trans = false)
         {
             setState("寻找坐标中");
-            clear();
-            var p = new Point();
+            var p = findImage("自动寻路|自动寻路2");
+            if (p.X <= 0)
+            {
+                clear();
+            }
             while (p.X <= 0)
             {
                 dm.KeyPress(Keys.M);
@@ -135,7 +138,7 @@ namespace GameWindow.entities
                     break;
                 }
                 prev_data = current_data;
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
 
@@ -203,7 +206,7 @@ namespace GameWindow.entities
             for (int i = 1; i < 10; i++)
             {
                 dm.KeyPress((Keys)(48 + i));
-                Thread.Sleep(100);
+                Thread.Sleep(30);
             }
             dm.KeyPress((Keys)48);
         }
@@ -332,7 +335,8 @@ namespace GameWindow.entities
                 {
                     unbind();
                 }
-                action = () => {
+                action = () =>
+                {
                     try
                     {
                         Thread.Sleep(3000);

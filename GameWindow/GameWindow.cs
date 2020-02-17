@@ -17,6 +17,7 @@ using System.Threading;
 using System.Collections;
 using GameWindow.entities;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace GameWindow
 {
@@ -26,7 +27,7 @@ namespace GameWindow
         public GameWindow()
         {
             InitializeComponent();
-            MinimizeBox = false;
+            //MinimizeBox = false;
         }
         void AddPage(UserInfoBase user)
         {
@@ -60,7 +61,17 @@ namespace GameWindow
             //serverProvider.SendMsg(ServiceRemoteType.InitClient, guid);
             InitRemoteProvider(user);
             AddPage(user);
+            //AddPage(user);
             this.Text = user.Nickname + "-" + user.Name;
+
+            //var tabpage = new TabPage("user.Nickname");
+            //var wb = new WebBrowser();
+            //wb.Dock = DockStyle.Fill;
+            //tabpage.Controls.Add(wb);
+            ////wb.Url = new Uri("http://frmmo.wan.360.cn/game_login.php?server_id=S2&src=360wan-2jxx-frmmo");
+            //wb.Url = new Uri(user.AreaValue);
+            //wb.ScriptErrorsSuppressed = true;
+            //tab.TabPages.Add(tabpage);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -176,6 +187,8 @@ namespace GameWindow
         {
             //serverProvider.SendMsg("cookie", user.GameHwnd, wb.Document.Cookie);
         }
+        [DllImport("KERNEL32.DLL", EntryPoint = "SetProcessWorkingSetSize", SetLastError = true, CallingConvention = CallingConvention.StdCall)]
+        internal static extern bool SetProcessWorkingSetSize(IntPtr pProcess, int dwMinimumWorkingSetSize, int dwMaximumWorkingSetSize);
 
         [DllImport("wininet.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
         public static extern bool InternetSetOption(int hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
@@ -200,6 +213,16 @@ namespace GameWindow
             if (!success)
             {
                 MessageBox.Show("Something went wrong !>?");
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
             }
         }
     }

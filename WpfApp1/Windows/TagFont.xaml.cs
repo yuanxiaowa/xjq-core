@@ -39,8 +39,13 @@ namespace WpfApp.Windows
         List<FontEntity> fonts;
         string font_filename = "resources/font-enemies.txt";
         int last_index = 0;
+        string image_folder = "fuhun-name";
         private void Init()
         {
+            if (!Directory.Exists(image_folder))
+            {
+                Directory.CreateDirectory(image_folder);
+            }
             var text = File.ReadAllText(font_filename, Encoding.GetEncoding("gb2312"));
             lb_list.ItemsSource = fonts = text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select((item, i) =>
@@ -95,7 +100,7 @@ namespace WpfApp.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var filenames = Directory.EnumerateFiles("fuhun-name");
+            var filenames = Directory.EnumerateFiles(image_folder);
             var i = lb_list.SelectedIndex;
             foreach (var filename in filenames)
             {

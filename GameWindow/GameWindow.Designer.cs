@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tab = new System.Windows.Forms.TabControl();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // tab
@@ -39,6 +41,11 @@
             this.tab.SelectedIndex = 0;
             this.tab.Size = new System.Drawing.Size(1292, 773);
             this.tab.TabIndex = 1;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GameWindow
             // 
@@ -54,6 +61,7 @@
 
         #endregion
         private System.Windows.Forms.TabControl tab;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

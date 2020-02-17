@@ -58,7 +58,7 @@ namespace GameWindow.entities
                         Thread.Sleep(1000);
                         break;
                     }
-                    Thread.Sleep(100);
+                    Thread.Sleep(1000);
                 }
             }
         }
