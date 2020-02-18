@@ -18,6 +18,7 @@ using MahApps.Metro.Controls;
 using OdyLibrary;
 using System.Web;
 using WpfApp.Windows;
+using WpfApp.entities;
 
 namespace WpfApp1
 {
@@ -26,7 +27,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public ObservableCollection<UserInfo> Columns { get; set; }
+        public ObservableCollection<UserInfo> Columns { get; set; } = new ObservableCollection<UserInfo>();
         //OneServiceRemoteProvider clientProvider;
         List<NameValue> menus = new List<NameValue> {
             new NameValue() { Name = "打开",Value="open" },
@@ -42,10 +43,11 @@ namespace WpfApp1
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            InitClients();
             //this.cmb.ItemsSource = tools.GetAreas();
-            this.loadConfig();
-            this.ctrl_menu.ItemsSource = menus;
-            InitProvider();
+            //this.loadConfig();
+            //this.ctrl_menu.ItemsSource = menus;
+            //InitProvider();
             this.Closing += MainWindow_Closing;
             chk_auto_trans.Checked += OnChange;
             chk_auto_trans.Unchecked += OnChange;
@@ -58,6 +60,39 @@ namespace WpfApp1
             chk_locate_interval.Unchecked += OnChange;
             chk_locate_interval.Checked += OnChange;
             tb_locate_interval.TextChanged += OnChange;
+        }
+
+        private void InitClients()
+        {
+            var hwnds = Tg.GetWindowIds();
+            var datas = hwnds.Select(item =>
+             {
+                 var column = Columns.FirstOrDefault(_item => _item.GameHwnd == item);
+                 if (column != null)
+                 {
+                     return column;
+                 }
+                 var provider = new GameOperation();
+                 column = new UserInfo()
+                 {
+                     GameHwnd = item,
+                     Provider = provider,
+                     Name = "凡人修仙",
+                     State = "在线"
+                 };
+                 provider.DataEvent += (type, value) =>
+                 {
+                     RemoteProvider_OnReceivedMsg(type, column, value);
+                 };
+                 provider.StateChange += (state) =>
+                   {
+                       column.State = state;
+                       RefreshTable();
+                   };
+                 provider.operate("init", item);
+                 return column;
+             }).ToList();
+            dg.ItemsSource = Columns = new ObservableCollection<UserInfo>(datas);
         }
 
         GameSetting GetSetting()
@@ -79,11 +114,11 @@ namespace WpfApp1
 
         RemoteService remoteService;
         string remote_name = Guid.NewGuid().ToString();
-        void InitProvider()
-        {
-            remoteService = new RemoteService(remote_name, "server");
-            remoteService.remoteProvider.OnReceivedMsg += RemoteProvider_OnReceivedMsg;
-        }
+        //void InitProvider()
+        //{
+        //    remoteService = new RemoteService(remote_name, "server");
+        //    remoteService.remoteProvider.OnReceivedMsg += RemoteProvider_OnReceivedMsg;
+        //}
 
         void SetUserCookie(string str)
         {
@@ -93,77 +128,68 @@ namespace WpfApp1
             saveConfig();
         }
 
-        private void RemoteProvider_OnReceivedMsg(string type, string gwnd, string value)
+        private void RemoteProvider_OnReceivedMsg(string type, UserInfo column, string value)
         {
-            //if (type == "client-init")
-            //{
-            //    //clientProvider = RemoteService.GetRemoteObject<OneServiceRemoteProvider>(gwnd, "client");
-            //    return;
-            //}
-            if (type == "close" && string.IsNullOrEmpty(gwnd))
+            try
             {
-                //clientProvider = null;
-                //foreach (var item in Columns)
-                //{
-                //    item.Reset();
-                //}
-                return;
-            }
-            var column = Columns.First(item => item.GameHwnd == gwnd);
-            if (column != null)
-            {
-                try
+                if (type == "game-start")
                 {
-                    if (type == "client-init")
+                    this.Invoke(async () =>
                     {
-                        ConnectClient(column, value);
-                    }
-                    else if (type == "game-start")
-                    {
-                        this.Invoke(async () =>
+                        await Task.Delay(20);
+                        try
                         {
-                            await Task.Delay(20);
-                            try
-                            {
-                                column.Provider.SendMsg("game-setting", column.GameHwnd, JsonConvert.SerializeObject(GetSetting()));
+                            column.Provider.operate("game-setting", JsonConvert.SerializeObject(GetSetting()));
 
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                            }
-                        });
-                    }
-                    else if (type == "game-exit")
-                    {
-                        column.Reset();
-                    }
-                    else if (type == "state-change")
-                    {
-                        column.State = value;
-                    }
-                    else if (type == "fuhun-capture")
-                    {
-                        this.Invoke(new Action(() =>
+                        }
+                        catch (Exception e)
                         {
-                            ToTagEnemy(column, value);
-                        }));
-                    }
-                    else if (type == "win-state")
-                    {
-                        column.WinState = value;
-                    }
-                    RefreshTable();
+                            Console.WriteLine(e);
+                        }
+                    });
                 }
-                catch (Exception)
+                else if (type == "game-exit")
                 {
+                    column.Reset();
                 }
+                else if (type == "state-change")
+                {
+                    column.State = value;
+                }
+                else if (type == "fuhun-capture")
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        ToTagEnemy(column, value);
+                    }));
+                }
+                else if (type == "win-state")
+                {
+                    column.WinState = value;
+                }
+                else if (type == "fuhun-end")
+                {
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(1000);
+                        //if (DateTime.Now.Hour == 19)
+                        //{
+                        //    column.Provider.operate("fuhun-init");
+                        //}
+
+                        column.Provider.operate("fuhun-init");
+                    });
+                }
+                RefreshTable();
+            }
+            catch (Exception)
+            {
             }
         }
 
         void ConnectClient(UserInfo user, string path)
         {
-            user.Provider = RemoteService.GetRemoteObject<OneServiceRemoteProvider>(path, "client");
+            //user.Provider = RemoteService.GetRemoteObject<OneServiceRemoteProvider>(path, "client");
 
             //var op = new GameOperation(column);
             //op.OnStateChange += RefreshTable;
@@ -294,7 +320,7 @@ namespace WpfApp1
         {
             try
             {
-                item.Provider.SendMsg(name, item.GameHwnd, value);
+                item.Provider.operate(name, value);
             }
             catch (Exception)
             {
@@ -346,7 +372,7 @@ namespace WpfApp1
                 {
                     try
                     {
-                        item.Provider.SendMsg(type, item.GameHwnd, value);
+                        item.Provider.operate(type, value);
                     }
                     catch (Exception)
                     {
@@ -419,7 +445,7 @@ namespace WpfApp1
         /// <param name="indexes"></param>
         public void SetTagEnemy(UserInfo user, int[] indexes)
         {
-            user.Provider.SendMsg("fuhun-tag", user.GameHwnd, string.Join(",", indexes));
+            user.Provider.operate("fuhun-tag", string.Join(",", indexes));
         }
         void openGame(UserInfoBase user)
         {
@@ -526,6 +552,11 @@ namespace WpfApp1
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
             new TagFont().ShowDialog();
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            InitClients();
         }
 
         //private void Button_Click_5(object sender, RoutedEventArgs e)

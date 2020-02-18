@@ -147,10 +147,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="entities\Fight.cs" />
+    <Compile Include="entities\Fuhun.cs" />
     <Compile Include="entities\FuhunName.cs" />
+    <Compile Include="entities\GameOperation.cs" />
+    <Compile Include="entities\KuafuBoss.cs" />
     <Compile Include="entities\NameValue.cs" />
     <Compile Include="entities\SymmetryEncrypt.cs" />
     <Compile Include="entities\TaobaoJifuqi.cs" />
+    <Compile Include="entities\Tg.cs" />
     <Compile Include="entities\ThunderMachine.cs" />
     <Compile Include="entities\Tools.cs" />
     <Compile Include="entities\UserInfo.cs" />
@@ -246,6 +251,57 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\0-.bmp" />
+    <Resource Include="resources\arrow-left.bmp" />
+    <Resource Include="resources\arrow1.bmp" />
+    <Resource Include="resources\cloud.bmp" />
+    <Content Include="resources\dm.dll" />
+    <Resource Include="resources\dot.bmp" />
+    <Content Include="resources\enter.js" />
+    <Content Include="resources\enter4399.js" />
+    <Content Include="resources\enter91.js" />
+    <Resource Include="resources\flag.bmp" />
+    <Resource Include="resources\font-enemies.txt" />
+    <Resource Include="resources\font2.txt" />
+    <Resource Include="resources\fuhun-bar.bmp" />
+    <Resource Include="resources\move.bmp" />
+    <Resource Include="resources\send.bmp" />
+    <Resource Include="resources\tr-corner.bmp" />
+    <Resource Include="resources\中立-附魂战场.bmp" />
+    <Resource Include="resources\中立-附魂战场休息室.bmp" />
+    <Resource Include="resources\前往传送.bmp" />
+    <Resource Include="resources\前往传送2.bmp" />
+    <Resource Include="resources\剩余时间.bmp" />
+    <Resource Include="resources\原地复活.bmp" />
+    <Resource Include="resources\参加竞技.bmp" />
+    <Resource Include="resources\参加竞技2.bmp" />
+    <Resource Include="resources\取消竞技.bmp" />
+    <Resource Include="resources\否.bmp" />
+    <Resource Include="resources\复活点复活.bmp" />
+    <Resource Include="resources\复活点复活2.bmp" />
+    <Resource Include="resources\太机城.bmp" />
+    <Resource Include="resources\是.bmp" />
+    <Resource Include="resources\立即前往.bmp" />
+    <Resource Include="resources\结算列表.bmp" />
+    <Resource Include="resources\自动寻路.bmp" />
+    <Resource Include="resources\自动寻路2.bmp" />
+    <Resource Include="resources\虚宁洞天.bmp" />
+    <Resource Include="resources\角色选择.bmp" />
+    <Resource Include="resources\跨服boss一层.bmp" />
+    <Resource Include="resources\跨服boss二层.bmp" />
+    <Resource Include="resources\进入.bmp" />
+    <Resource Include="resources\进入2.bmp" />
+    <Resource Include="resources\进入游戏.bmp" />
+    <Resource Include="resources\附魂-bracket.bmp" />
+    <Resource Include="resources\附魂-icon.bmp" />
+    <Resource Include="resources\附魂-icon2.bmp" />
+    <Resource Include="resources\附魂战场.bmp" />
+    <Resource Include="resources\附魂报名人物.bmp" />
+    <Resource Include="resources\附魂进入.bmp" />
+    <Resource Include="resources\附魂进入2.bmp" />
+    <Resource Include="resources\领取奖励.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

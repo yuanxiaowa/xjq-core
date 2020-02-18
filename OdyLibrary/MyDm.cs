@@ -277,12 +277,15 @@ namespace OdyLibrary
 
         public int SetShowErrorMsg(int show)
         {
-            throw new NotImplementedException();
+            return dm.SetShowErrorMsg(show);
         }
 
-        public int GetClientSize(int hwnd, out object width, out object height)
+        public Point GetClientSize(int hwnd)
         {
-            throw new NotImplementedException();
+            object x;
+            object y;
+            dm.GetClientSize(hwnd, out x, out y);
+            return new Point((int)x, (int)y);
         }
 
         public int MoveWindow(int hwnd, int x, int y)

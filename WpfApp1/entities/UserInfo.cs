@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp.entities;
 
 namespace WpfApp1.entities
 {
@@ -22,7 +23,7 @@ namespace WpfApp1.entities
         /// 窗口状态
         /// </summary>
         public string WinState { get; set; } = "-";
-        public OneServiceRemoteProvider Provider { get; set; }
+        public GameOperation Provider { get; set; }
         public UserInfo()
         {
         }
