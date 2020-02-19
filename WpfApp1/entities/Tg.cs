@@ -16,7 +16,7 @@ namespace WpfApp.entities
             var dm = new MyDm();
             //dm.GetWindowClass()
 
-            var str = dm.EnumWindow(0, "", "Afx:", 0b11110);
+            var str = dm.EnumWindow(0, "", "Afx:", 0b1110);
             //EnumWindows((int hWnd, int lParam) =>
             //{
             //    var name = dm.GetWindowClass(hWnd);
@@ -35,7 +35,7 @@ namespace WpfApp.entities
             return str.Split(',').Select(item =>
             {
                 var hwnd = int.Parse(item);
-                var h1 = dm.EnumWindow(hwnd, "", "MacromediaFlashPlayerActiveX", 2 + 16);
+                var h1 = dm.EnumWindow(hwnd, "", "MacromediaFlashPlayerActiveX", 2);
 
                 var arr = h1.Split(',');
                 if (arr.Length > 0)

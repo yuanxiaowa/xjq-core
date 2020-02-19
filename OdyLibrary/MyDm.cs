@@ -353,12 +353,12 @@ namespace OdyLibrary
 
         public int GetSpecialWindow(int flag)
         {
-            throw new NotImplementedException();
+            return dm.GetSpecialWindow(flag);
         }
 
         public int SetWindowText(int hwnd, string text)
         {
-            throw new NotImplementedException();
+            return dm.SetWindowText(hwnd, text);
         }
 
         public int SetWindowSize(int hwnd, int width, int height)
@@ -378,17 +378,17 @@ namespace OdyLibrary
 
         public string GetWindowTitle(int hwnd)
         {
-            throw new NotImplementedException();
+            return dm.GetWindowTitle(hwnd);
         }
 
         public string GetWindowClass(int hwnd)
         {
-            throw new NotImplementedException();
+            return dm.GetWindowClass(hwnd);
         }
 
         public int SetWindowState(int hwnd, int flag)
         {
-            throw new NotImplementedException();
+            return dm.SetWindowState(hwnd, flag);
         }
 
         public int CreateFoobarRect(int hwnd, int x, int y, int w, int h)

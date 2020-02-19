@@ -15,17 +15,23 @@
         <TabControl Margin="5,5,0,0">
             <TabItem Header="账号信息">
                 <Grid Background="#FFE5E5E5" Margin="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="113*"/>
-                        <ColumnDefinition Width="52*"/>
-                        <ColumnDefinition Width="612*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Content="自动打架" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,360,0" Click="Button_Click_5" Height="27"/>
-                    <DataGrid x:Name="dg" ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Margin="0" Grid.ColumnSpan="3">
+                    <Grid Grid.Row="0">
+                        <TextBox x:Name="ctrl_msg" HorizontalAlignment="Left" Height="27" Margin="631,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Button Content="发送" HorizontalAlignment="Left" Margin="759,8,0,0" VerticalAlignment="Top" Width="54" Click="Button_Click_1"/>
+                        <TextBox x:Name="ctrl_xunlu" HorizontalAlignment="Left" Height="27" Margin="154,8,0,0" Text="10,10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Button Content="开始附魂" VerticalAlignment="Top" IsCancel="True" Height="27" Width="75" Margin="553,8,251,0" Click="Button_Click_3"/>
+                        <Button Content="寻路" Grid.Row="0" Click="Button_Click_2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,8,518,0" Height="27"/>
+                        <Button Content="截图" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Margin="822,8,0,0" Click="Button_Click_4"/>
+                        <Button Content="跨服boss" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,8,340,0" Click="Button_Click" Height="27"/>
+                        <Button Content="全选/取消" HorizontalAlignment="Left" Margin="3,8,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
+                        <Button Content="获取窗口" HorizontalAlignment="Left" Margin="82,8,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click_8"/>
+                        <Button Content="自动打架" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,8,429,0" Click="Button_Click_5" Height="27"/>
+                    </Grid>
+                    <DataGrid x:Name="dg" ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Margin="0">
                         <DataGrid.ContextMenu>
                             <ContextMenu Name="ctrl_menu" DisplayMemberPath="Name" MenuItem.Click="ctrl_menu_Click">
                             </ContextMenu>
@@ -55,15 +61,7 @@
                             <!--</DataGridComboBoxColumn>-->
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox x:Name="ctrl_msg" Grid.Column="2" HorizontalAlignment="Left" Height="27" Margin="423,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Button Content="发送" Grid.Column="2" HorizontalAlignment="Left" Margin="559,8,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-                    <TextBox x:Name="ctrl_xunlu" Grid.Column="2" HorizontalAlignment="Left" Height="27" Margin="45,8,0,0" Text="10,10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Button Content="开始附魂" Margin="28,8,660,0" VerticalAlignment="Top" Click="Button_Click_3" IsCancel="True" Grid.ColumnSpan="2" Grid.Column="1" Height="27"/>
-                    <Button Content="寻路" Grid.Row="0" Click="Button_Click_2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,441,0" Height="27"/>
-                    <Button Content="截图" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Margin="641,9,0,0" Click="Button_Click_4" Grid.Column="2"/>
-                    <Button Content="跨服boss" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="0,8,279,0" Click="Button_Click" Height="27"/>
-                    <Button Content="全选/取消" HorizontalAlignment="Left" Margin="3,8,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
-                    <Button Content="获取窗口" HorizontalAlignment="Left" Margin="84,8,0,0" VerticalAlignment="Top" Width="58" Grid.ColumnSpan="2" Click="Button_Click_8"/>
+
 
                     <!--<CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top"/>-->
                 </Grid>

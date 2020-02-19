@@ -278,9 +278,17 @@ namespace WpfApp.entities
 
             this.hwnd = hwnd;
             var r = dm.BindWindowEx(hwnd, "gdi",
-                "dx.mouse.position.lock.api|dx.mouse.clip.lock.api|dx.mouse.input.lock.api|dx.mouse.state.api|dx.mouse.api|dx.mouse.cursor"
-                //"windows"
+                "dx.mouse.position.lock.api|dx.mouse.clip.lock.api|dx.mouse.input.lock.api|dx.mouse.state.api|dx.mouse.api|dx.mouse.cursor",
+                "windows",
+                "",
+                0
                 );
+            if (r == 0)
+            {
+                MessageBox.Show("窗口绑定失败");
+                return;
+            }
+            dm.SetWindowState(hwnd, 14);
             setState("游戏中");
             DataEvent("enter", "");
             if (setting.AutoSelectRole)
